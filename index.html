@@ -1,0 +1,72 @@
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="src/styles/style.css">
+        <title>Note-taking App</title>
+    </head>
+    <body>
+
+        <!-- Background music -->
+        <audio id="background-music" autoplay loop>
+            <source src="retro-gaming.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <script>
+            document.getElementById('background-music').volume = 0.1; 
+        </script>
+
+        <!-- Welcome and Sign In Section -->
+        <div class="welcome-container" id="welcome-container">
+            <h1>Welcome to Note-taking App!</h1>
+            <button class="signin-btn" id="signin-btn">Sign In</button>
+        </div>
+
+        <!-- Sign In Form Section -->
+        <div class="signin-container" id="signin-container" style="display:none;">
+            <h2>Sign In</h2>
+            <form id="signin-form">
+                <input type="text" id="signin-username" placeholder="Username" required><br>
+                <input type="password" id="signin-password" placeholder="Password" required><br>
+                <button type="submit" class="signin-btn">Sign In</button>
+            </form>
+            <button class="back-btn" id="back-btn">&larr;</button>
+            <div class="signup-section">
+                <p>Don't have an account? <button class="signup-btn" id="signup-btn">Sign Up</button></p>
+                <p><button class="forgot-password-btn" id="forgot-password-btn">Forgot Password?</button></p>
+            </div>
+        </div>
+
+        <!-- Forget Password Container -->
+        <div class="forgot-password-container" id="forgot-password-container" style="display:none;">
+            <h2>Reset Password</h2>
+            <p>Enter your email to receive a reset link:</p>
+            <form id="forgot-password-form">
+                <input type="email" id="forgot-password-email" placeholder="Enter your email" required><br>
+                <button type="submit" class="reset-btn">Send Reset Link</button>
+            </form>
+            <button class="back-btn" id="forgot-password-back-btn">&larr;</button>
+        </div>
+
+        <!-- Sign Up Container -->
+        <div class="signup-container" id="signup-container" style="display:none;">
+            <button class="back-btn" id="back-btn-signup">&larr;</button>
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="email" id="signup-email" placeholder="Email" required><br>
+                <input type="text" id="signup-username" placeholder="Username" required><br>
+                <input type="password" id="signup-password" placeholder="Password" required><br>
+                <input type="password" id="confirm-password" placeholder="Confirm Password" required><br>
+                <span id="password-note">Password must be at least 6 characters</span><br><br>
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Firebase scripts -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="src/js/script.js"></script>
+    </body>
+</html> 

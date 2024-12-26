@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/styles/note-style.css">
+    <title>Note-taking App</title>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="header">
+            <h2>Notes</h2>
+            <button id="clear-btn">New Note</button> <!-- Cbutton added -->
+        </div>
+        <ul id="field-list">
+            <!-- Document fields will be listed here -->
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <h1>Edit Note</h1>
+        <a href="index.html" id="logout-btn">Log out</a> <!-- Log out button -->
+        
+        <!-- Input fields to add a new field -->
+        <input type="text" id="new-field-name" placeholder="Note title">
+        <textarea id="new-field-value" placeholder="Enter your note here..."></textarea>
+        <button id="add-field-btn">Save</button>
+
+        <!-- Button to delete a field -->
+        <button id="delete-btn">Delete</button>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, updateDoc, deleteField } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-firestore.js";
+    
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQRy-4dn-N6ik9YMUF-cqUMnRPIVWuC7k",
+            authDomain: "electron-app-73463.firebaseapp.com",
+            projectId: "electron-app-73463",
+            storageBucket: "electron-app-73463.firebasestorage.app",
+            messagingSenderId: "239237088922",
+            appId: "1:239237088922:web:525a884e6007781bdd4123"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+    
+        // Get the document ID from the URL query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const docId = urlParams.get('docId');
+    
+        if (!docId) {
+            alert("No document ID found in URL!");
+            window.location.href = 'index.html'; // Redirect if no docId found
+        }
+    
+        // Function to load the document
+        function loadDocument() {
+            const docRef = doc(db, 'notes', docId);
+            getDoc(docRef).then((docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const fieldList = document.getElementById('field-list');
+                    fieldList.innerHTML = '';  // Clear existing fields
+    
+                    // Loop through all fields and display them in the sidebar
+                    for (const field in data) {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = field;
+                        listItem.addEventListener('click', () => {
+                            loadFieldValue(field, data[field]);
+                        });
+                        fieldList.appendChild(listItem);
+                    }
+                } else {
+                    console.error("No such document!");
+                }
+            }).catch(error => {
+                console.error("Error getting document: ", error);
+            });
+        }
+    
+        // Function to load the field value into the textarea when a field is clicked
+        function loadFieldValue(fieldName, fieldValue) {
+            document.getElementById('new-field-name').value = fieldName;
+            document.getElementById('new-field-value').value = fieldValue;
+        }
+    
+        // Load the document when the page loads
+        loadDocument();
+    
+        // Add a new field to the document
+        document.getElementById('add-field-btn').addEventListener('click', () => {
+            const fieldName = document.getElementById('new-field-name').value;
+            const fieldValue = document.getElementById('new-field-value').value;
+    
+            if (fieldName && fieldValue) {
+                // Update Firestore document with new field
+                const docRef = doc(db, 'notes', docId);
+                updateDoc(docRef, {
+                    [fieldName]: fieldValue
+                })
+                .then(() => {
+                    console.log("Field added successfully!");
+                    // Reload the document to display the new field
+                    loadDocument();
+                })
+                .catch(error => {
+                    console.error("Error adding field: ", error);
+                });
+            } else {
+                alert("Please enter both field name and value!");
+            }
+        });
+    
+        // Delete a field from the document
+        document.getElementById('delete-btn').addEventListener('click', () => {
+            const fieldName = document.getElementById('new-field-name').value;
+    
+            if (fieldName) {
+                // Update Firestore document by deleting the field
+                const docRef = doc(db, 'notes', docId);
+                updateDoc(docRef, {
+                    [fieldName]: deleteField()
+                })
+                .then(() => {
+                    console.log("Field deleted successfully!");
+                    // Reload the document to reflect changes
+                    loadDocument();
+                })
+                .catch(error => {
+                    console.error("Error deleting field: ", error);
+                });
+            } else {
+                alert("Please enter a field name to delete!");
+            }
+        });
+
+        // Clear input fields and textarea when "Clear" button is clicked
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            document.getElementById('new-field-name').value = '';
+            document.getElementById('new-field-value').value = '';
+        });
+
+    </script>
+</body>
+</html>

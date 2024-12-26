@@ -1,0 +1,159 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    background-color: #121212;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: #1e1e1e;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    color: #e0e0e0;
+}
+
+#sidebar .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#sidebar h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #b0b0b0;
+}
+
+#clear-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#clear-btn:hover {
+    background-color: #0056b3;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #444;
+    font-size: 16px;
+}
+
+#sidebar ul li:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+#sidebar ul li:active {
+    background-color: #555;
+}
+
+#main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #181818;
+    background-image: url('../images/darkbackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #e0e0e0;
+}
+
+#main-content h1 {
+    font-size: 24px;
+    color: #e0e0e0;
+}
+
+#main-content a {
+    color: #66bb6a;
+    text-decoration: none;
+}
+
+#main-content a:hover {
+    text-decoration: underline;
+}
+
+#new-field-name,
+#new-field-value {
+    width: 95%;
+    padding: 12px;
+    margin: 10px 0;
+    font-size: 16px;
+    background-color: #333;
+    border: 1px solid #444;
+    color: #e0e0e0;
+    border-radius: 5px;
+}
+
+#new-field-name:focus,
+#new-field-value:focus {
+    outline: none;
+    border-color: #66bb6a;
+}
+
+#new-field-value {
+    height: 200px;
+    resize: vertical;
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+button:active {
+    background-color: #1e7e34;
+}
+
+#delete-btn {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#delete-btn:hover {
+    background-color: #8b0000;
+}
+
+#logout-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+#logout-btn:hover {
+    text-decoration: underline;
+}
